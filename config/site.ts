@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
+  name: "Jesper Falkenby",
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
@@ -9,61 +9,50 @@ export const siteConfig = {
       href: "#home",
     },
     {
-      label: "Docs",
-      href: "#docs",
+      label: "Résumé",
+      href: "#resume",
     },
     {
-      label: "Pricing",
-      href: "#pricing",
-    },
-    {
-      label: "Blog",
-      href: "#blog",
+      label: "Publications",
+      href: "#publications",
     },
     {
       label: "About",
       href: "#about",
     },
+    {
+      label: "Contact",
+      href: "#contact",
+    },
   ],
   navMenuItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: "Home",
+      href: "#home",
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "Résumé",
+      href: "#resume",
     },
     {
       label: "Projects",
-      href: "/projects",
+      href: "#projects",
     },
     {
-      label: "Team",
-      href: "/team",
+      label: "Publications",
+      href: "#publications",
     },
     {
-      label: "Calendar",
-      href: "/calendar",
+      label: "About",
+      href: "#about",
     },
     {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
+      label: "Contact",
+      href: "#contact",
     },
   ],
   links: {
-    github: "https://github.com/heroui-inc/heroui",
+    github: "https://github.com/hyzor",
     twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
   },
 };
