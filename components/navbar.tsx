@@ -16,7 +16,7 @@ import NextLink from "next/link";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
-import { GithubIcon, Logo } from "@/components/icons";
+import { GithubIcon, Logo, LinkedInIcon } from "@/components/icons";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,12 +63,15 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
+        className="hidden sm:flex basis-1/5 sm:basis-full"  
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
           <Link isExternal aria-label="Github" href={siteConfig.links.github}>
             <GithubIcon className="text-default-500" />
+          </Link>
+          <Link isExternal aria-label="LinkedIn" href={siteConfig.links.linkedin}>
+            <LinkedInIcon className="text-default-500" />
           </Link>
         </NavbarItem>
       </NavbarContent>

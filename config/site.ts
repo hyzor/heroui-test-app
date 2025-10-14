@@ -35,10 +35,6 @@ export const siteConfig = {
       href: "#resume",
     },
     {
-      label: "Projects",
-      href: "#projects",
-    },
-    {
       label: "Publications",
       href: "#publications",
     },
@@ -52,7 +48,7 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/hyzor",
-    twitter: "https://twitter.com/hero_ui",
+    linkedin: "https://linkedin.com/in/jesperfalkenby",
+    github: "https://github.com/hyzor"
   },
 };
