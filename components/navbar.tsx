@@ -22,6 +22,16 @@ import { GithubIcon, Logo } from "@/components/icons";
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleSmoothScroll = (e: any, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <HeroUINavbar
       isMenuOpen={isMenuOpen}
@@ -44,6 +54,7 @@ export const Navbar = () => {
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 href={item.href}
+                onClick={(e) => handleSmoothScroll(e, item.href)}
               >
                 {item.label}
               </a>
@@ -80,7 +91,10 @@ export const Navbar = () => {
                 color="foreground"
                 href={item.href}
                 size="lg"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => {
+                  handleSmoothScroll(e as any, item.href);
+                  setIsMenuOpen(false);
+                }}
               >
                 {item.label}
               </Link>
