@@ -22,7 +22,7 @@ export function Section({
       className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 min-h-screen"
       id={id}
     >
-      <div className="inline-block max-w-xl text-center">
+      <div className="inline-block max-w-3xl text-center">
         <HeadingTag className={title()}>{sectionTitle}</HeadingTag>
         {children}
       </div>

@@ -4,6 +4,7 @@ import { subtitle } from "@/components/primitives";
 import { Section } from "@/components/section";
 import { GithubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
+import aboutData from "@/data/about.json";
 
 export default function Home() {
   return (
@@ -34,15 +35,11 @@ export default function Home() {
         </p>
       </Section>
       <Section headingLevel={2} id="about" title="About">
-        <p className="mt-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <div className="mt-4 space-y-4">
+          {aboutData.paragraphs.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
       </Section>
       <Section headingLevel={2} id="contact" title="Contact">
         <div className="flex gap-4 mt-8">
