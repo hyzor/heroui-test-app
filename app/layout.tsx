@@ -8,7 +8,7 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
-import AnimatedCircuitBackground from "@/components/AnimatedCircuitBackground";
+import AnimatedBackground from "@/components/animatedbackground";
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +42,7 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
-        <AnimatedCircuitBackground />
+        <AnimatedBackground />
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
             <Navbar />

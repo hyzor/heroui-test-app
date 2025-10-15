@@ -1,7 +1,7 @@
 import { Button } from "@heroui/button";
 
 import { subtitle } from "@/components/primitives";
-import { Section } from "@/components/Section";
+import { Section } from "@/components/section";
 import { GithubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 

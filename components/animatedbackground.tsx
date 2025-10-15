@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export default function AnimatedCircuitBackground() {
+export default function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
