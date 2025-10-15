@@ -49,6 +49,7 @@ export const siteConfig = {
   ],
   links: {
     linkedin: "https://linkedin.com/in/jesperfalkenby",
-    github: "https://github.com/hyzor"
+    github: "https://github.com/hyzor",
+    email: "mailto:jesper.falkenby@gmail.com",
   },
 };

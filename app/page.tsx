@@ -1,5 +1,9 @@
+import { Button } from "@heroui/button";
+
 import { subtitle } from "@/components/primitives";
 import { Section } from "@/components/Section";
+import { GithubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
+import { siteConfig } from "@/config/site";
 
 export default function Home() {
   return (
@@ -40,7 +44,38 @@ export default function Home() {
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </Section>
-      <Section headingLevel={2} id="contact" title="Contact" />
+      <Section headingLevel={2} id="contact" title="Contact">
+        <div className="flex gap-4 mt-8">
+          <Button
+            as="a"
+            href={siteConfig.links.github}
+            rel="noopener noreferrer"
+            size="lg"
+            startContent={<GithubIcon size={24} />}
+            target="_blank"
+          >
+            GitHub
+          </Button>
+          <Button
+            as="a"
+            href={siteConfig.links.linkedin}
+            rel="noopener noreferrer"
+            size="lg"
+            startContent={<LinkedInIcon size={24} />}
+            target="_blank"
+          >
+            LinkedIn
+          </Button>
+          <Button
+            as="a"
+            href={siteConfig.links.email}
+            size="lg"
+            startContent={<MailIcon size={24} />}
+          >
+            Email
+          </Button>
+        </div>
+      </Section>
     </main>
   );
 }
