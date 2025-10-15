@@ -9,8 +9,13 @@ import aboutData from "@/data/about.json";
 export default function Home() {
   return (
     <main>
-      <Section headingLevel={1} id="home" title="Jesper Falkenby">
-        <div className={subtitle({ class: "mt-4" })}>Full-Stack Developer</div>
+      <Section
+        className="-mt-16"
+        headingLevel={1}
+        id="home"
+        title="Jesper Falkenby"
+      >
+        <div className={subtitle({ class: "mt-2" })}>Full-Stack Developer</div>
       </Section>
       <Section headingLevel={2} id="resume" title="Résumé">
         <p className="mt-4">

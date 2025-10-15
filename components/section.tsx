@@ -7,6 +7,7 @@ interface SectionProps {
   title: string;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   children?: React.ReactNode;
+  className?: string;
 }
 
 export function Section({
@@ -14,12 +15,13 @@ export function Section({
   title: sectionTitle,
   headingLevel = 2,
   children,
+  className,
 }: SectionProps) {
   const HeadingTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
 
   return (
     <section
-      className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 min-h-screen"
+      className={`flex flex-col items-center justify-center gap-4 py-20 md:py-20 min-h-screen ${className || ""}`}
       id={id}
     >
       <div className="inline-block max-w-3xl text-center">
