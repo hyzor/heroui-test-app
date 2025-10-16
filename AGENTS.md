@@ -1,21 +1,31 @@
-# Agent Guidelines for HeroUI Next.js Project
+# Repository Guidelines
 
-## Commands
+## Project Structure & Module Organization
+- `app/` contains App Router segments, route layouts, and server components; colocate page-level assets within each segment.
+- `components/` stores reusable HeroUI-driven client widgets; split complex pieces into subfolders with an `index.ts` barrel when exports exceed two items.
+- `config/` and `data/` hold runtime configuration and static content; update them instead of hardcoding strings in JSX.
+- `styles/` defines the Tailwind layers and global CSS, while `public/` serves static media.
+- Shared TypeScript contracts live in `types/`; prefer importing from there instead of duplicating interfaces.
 
-- **Build**: `npm run build` or `bun run build`
-- **Dev**: `npm run dev` or `bun run dev` (uses Turbopack)
-- **Lint**: `npm run lint` or `bun run lint` (ESLint with Prettier, auto-fix enabled)
-- **Type Check**: `npx tsc --noEmit` (TypeScript strict mode)
-- **Test**: No test framework configured yet
+## Build, Test, and Development Commands
+- `npm run dev` / `bun run dev` launches the Next.js dev server with Turbopack for rapid feedback.
+- `npm run build` (or `bun run build`) performs a production compilation and static analysis; run before publishing changes.
+- `npm run lint` auto-applies Prettier + ESLint fixes; rerun until the command exits cleanly.
+- `npx tsc --noEmit` verifies strict type safety without generating output; treat failures as blocking.
+- `npm run start` serves the optimized build locally to mirror deployment behaviour.
 
-## Code Style
+## Coding Style & Naming Conventions
+- TypeScript is strict; annotate props with dedicated interfaces/types and avoid `any`.
+- Imports are grouped by type → builtin → external → `@/` aliases → relative paths; allow ESLint to reorder automatically.
+- Use arrow functions for components, add `"use client"` only when stateful/browser APIs are needed, and keep callbacks as the last JSX props.
+- Styling relies on Tailwind utility classes, `clsx`, and `tailwind-variants`; consolidate conditional logic in helper functions when it spans multiple props.
+- Maintain 2-space indentation, camelCase for variables, and PascalCase for components, files, and directories that export React elements.
 
-- **TypeScript**: Strict mode enabled, use interfaces/types for component props
-- **Imports**: Group by type > builtin > external > internal (@/) > parent > sibling > index (ESLint enforced)
-- **JSX**: Sort props (callbacks last, shorthand first, reserved first), self-closing tags required
-- **Components**: Arrow functions preferred, "use client" directive for client components
-- **Styling**: HeroUI components with clsx/tailwind-variants for conditional classes
-- **Formatting**: Prettier integrated with ESLint, 2-space indentation
-- **Naming**: camelCase for variables/functions, PascalCase for components/types
-- **Error Handling**: try/catch for async operations, console.warn for non-critical issues
-- **Padding**: Blank lines between statements, especially before returns and between variable declarations
+## Testing Guidelines
+- No automated test runner ships yet; pair linting + type checks with manual UI verification covering new states and breakpoints.
+- When adding tests, colocate them beside the implementation (`*.test.tsx`) and document the command required to run the suite in this guide.
+
+## Commit & Pull Request Guidelines
+- Follow Conventional Commit prefixes observed in history (`feat:`, `refactor:`, `fix:`, etc.) and write concise imperatives under 60 characters.
+- Keep commits scoped to one change-set and include context in the body when behaviour shifts or data files update.
+- Pull requests should summarise the impact, link relevant issues, list manual test steps, and attach UI screenshots or recordings when the layout changes.
