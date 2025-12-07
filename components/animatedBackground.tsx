@@ -18,7 +18,12 @@ export default function AnimatedBackground() {
     canvas.height = window.innerHeight;
 
     const nodes: { x: number; y: number; vx: number; vy: number }[] = [];
-    const connections: { from: number; to: number; progress: number }[] = [];
+    const connections: {
+      path: number[];
+      progress: number;
+      speed: number;
+      color: string;
+    }[] = [];
 
     // Create nodes
     for (let i = 0; i < 50; i++) {
@@ -30,12 +35,43 @@ export default function AnimatedBackground() {
       });
     }
 
-    // Create connections
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        if (Math.random() < 0.1) {
-          connections.push({ from: i, to: j, progress: Math.random() });
+    // Create multi-node connections
+
+    for (let i = 0; i < 20; i++) {
+      const pathLength = Math.floor(Math.random() * 3) + 2; // 2-4 nodes per path
+      const path: number[] = [];
+      let currentNode = Math.floor(Math.random() * nodes.length);
+
+      for (let j = 0; j < pathLength; j++) {
+        path.push(currentNode);
+        // Find nearest node that's not already in path
+        let nearestNode = -1;
+        let minDistance = Infinity;
+
+        for (let k = 0; k < nodes.length; k++) {
+          if (!path.includes(k)) {
+            const dx = nodes[k].x - nodes[currentNode].x;
+            const dy = nodes[k].y - nodes[currentNode].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < minDistance && distance < 200) {
+              minDistance = distance;
+              nearestNode = k;
+            }
+          }
         }
+
+        if (nearestNode === -1) break;
+        currentNode = nearestNode;
+      }
+
+      if (path.length > 1) {
+        connections.push({
+          path,
+          progress: 0,
+          speed: 0.001 + Math.random() * 0.002,
+          color: "rgba(100, 200, 255, ",
+        });
       }
     }
 
@@ -51,33 +87,56 @@ export default function AnimatedBackground() {
         if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
       });
 
-      // Draw connections
+      // Draw multi-node connections
       connections.forEach((conn) => {
-        const from = nodes[conn.from];
-        const to = nodes[conn.to];
+        conn.progress += conn.speed;
+        if (conn.progress > 1) conn.progress = 0;
 
-        const dx = to.x - from.x;
-        const dy = to.y - from.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        // Calculate position along the path
+        const totalSegments = conn.path.length - 1;
+        const currentSegment = Math.floor(conn.progress * totalSegments);
+        const segmentProgress = (conn.progress * totalSegments) % 1;
 
-        if (distance < 150) {
-          conn.progress += 0.01;
-          if (conn.progress > 1) conn.progress = 0;
+        if (currentSegment < totalSegments) {
+          const fromNode = nodes[conn.path[currentSegment]];
+          const toNode = nodes[conn.path[currentSegment + 1]];
 
-          const x = from.x + dx * conn.progress;
-          const y = from.y + dy * conn.progress;
+          const x = fromNode.x + (toNode.x - fromNode.x) * segmentProgress;
+          const y = fromNode.y + (toNode.y - fromNode.y) * segmentProgress;
 
+          // Draw traveling particle
           ctx.beginPath();
-          ctx.arc(x, y, 2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(0, 255, 255, ${1 - conn.progress})`;
+          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = conn.color + (1 - conn.progress) + ")";
           ctx.fill();
+          ctx.shadowColor = conn.color + "1)";
+          ctx.shadowBlur = 10;
 
+          // Draw trail behind particle
           ctx.beginPath();
-          ctx.moveTo(from.x, from.y);
+          ctx.moveTo(fromNode.x, fromNode.y);
           ctx.lineTo(x, y);
-          ctx.strokeStyle = `rgba(0, 255, 255, ${0.3 * (1 - conn.progress)})`;
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = conn.color + 0.3 * (1 - conn.progress) + ")";
+          ctx.lineWidth = 2;
           ctx.stroke();
+
+          // Draw faint connection lines between all nodes in path
+          for (let i = 0; i < conn.path.length - 1; i++) {
+            const nodeA = nodes[conn.path[i]];
+            const nodeB = nodes[conn.path[i + 1]];
+            const dx = nodeB.x - nodeA.x;
+            const dy = nodeB.y - nodeA.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 200) {
+              ctx.beginPath();
+              ctx.moveTo(nodeA.x, nodeA.y);
+              ctx.lineTo(nodeB.x, nodeB.y);
+              ctx.strokeStyle = conn.color + "0.1)";
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
         }
       });
 
