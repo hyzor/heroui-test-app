@@ -1,6 +1,7 @@
-"use client";
-
+"use client";;
 import { title } from "@/components/primitives";
+
+import type { JSX } from "react";
 
 interface SectionProps {
   id: string;
