@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "bun run scripts/pdfjsWorker.tsx",
     "dev": "bun run prebuild && next dev --turbopack",
-    "build": "bun run prebuild && build",
+    "build": "bun run prebuild && next build",
     "start": "next start",
     "lint": "eslint --fix"
   },
