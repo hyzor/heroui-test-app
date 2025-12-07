@@ -96,20 +96,32 @@ export default function AnimatedBackground() {
 
     animate();
 
+    let resizeTimeout: NodeJS.Timeout;
+
     const handleResize = () => {
+      // Clear previous timeout
+      clearTimeout(resizeTimeout);
+
+      // Update canvas size immediately
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
-      // Redistribute nodes evenly across new canvas size
-      nodes.forEach((node) => {
-        node.x = Math.random() * canvas.width;
-        node.y = Math.random() * canvas.height;
-      });
+      // Wait for user to stop resizing before redistributing nodes
+      resizeTimeout = setTimeout(() => {
+        // Redistribute nodes evenly across new canvas size
+        nodes.forEach((node) => {
+          node.x = Math.random() * canvas.width;
+          node.y = Math.random() * canvas.height;
+        });
+      }, 100); // Wait 300ms after resize stops
     };
 
     window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout);
+    };
   }, []);
 
   return (
