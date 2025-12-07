@@ -99,6 +99,12 @@ export default function AnimatedBackground() {
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
+      // Redistribute nodes evenly across new canvas size
+      nodes.forEach((node) => {
+        node.x = Math.random() * canvas.width;
+        node.y = Math.random() * canvas.height;
+      });
     };
 
     window.addEventListener("resize", handleResize);
