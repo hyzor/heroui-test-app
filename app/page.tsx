@@ -6,6 +6,7 @@ import { Publications } from "@/components/publications";
 import { GithubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import aboutData from "@/data/about.json";
+import ResumeViewer from "@/components/resumeViewer";
 
 export default function Home() {
   return (
@@ -18,25 +19,19 @@ export default function Home() {
       >
         <div className={subtitle({ class: "mt-2" })}>Full-Stack Developer</div>
         <div className="mt-8 flex justify-center">
-          <Avatar className="w-64 h-64" src="/profile.jpg"/>
+          <Avatar className="w-80 h-80" src="/profile.jpg"/>
         </div>
       </Section>
       <Section headingLevel={2} id="resume" title="Résumé">
-        <p className="mt-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <div className="mt-8 flex justify-center">
+          <ResumeViewer />
+        </div>
       </Section>
       <Section headingLevel={2} id="publications" title="Publications">
         <Publications />
       </Section>
       <Section headingLevel={2} id="about" title="About">
-        <div className="mt-4 space-y-4">
+        <div className="mt-8 space-y-4">
           {aboutData.paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}

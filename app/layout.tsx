@@ -8,7 +8,7 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
-import AnimatedBackground from "@/components/animatedbackground";
+import AnimatedBackground from "@/components/animatedBackground";
 
 export const metadata: Metadata = {
   title: {

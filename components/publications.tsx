@@ -10,7 +10,7 @@ export function Publications() {
   const itemsPerPage = 1;
 
   return (
-    <div className="mt-4 space-y-6">
+    <div className="mt-8 space-y-6">
       {(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
