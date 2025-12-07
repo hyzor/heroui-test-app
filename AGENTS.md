@@ -8,11 +8,11 @@
 - Shared TypeScript contracts live in `types/`; prefer importing from there instead of duplicating interfaces.
 
 ## Build, Test, and Development Commands
-- `npm run dev` / `bun run dev` launches the Next.js dev server with Turbopack for rapid feedback.
-- `npm run build` (or `bun run build`) performs a production compilation and static analysis; run before publishing changes.
-- `npm run lint` auto-applies Prettier + ESLint fixes; rerun until the command exits cleanly.
-- `npx tsc --noEmit` verifies strict type safety without generating output; treat failures as blocking.
-- `npm run start` serves the optimized build locally to mirror deployment behaviour.
+- `bun run dev` launches the Next.js dev server with Turbopack for rapid feedback.
+- `bun run build` performs a production compilation and static analysis; run before publishing changes.
+- `bun run lint` auto-applies Prettier + ESLint fixes; rerun until the command exits cleanly.
+- `bunx tsc --noEmit` verifies strict type safety without generating output; treat failures as blocking.
+- `bun run start` serves the optimized build locally to mirror deployment behaviour.
 
 ## Coding Style & Naming Conventions
 - TypeScript is strict; annotate props with dedicated interfaces/types and avoid `any`.
