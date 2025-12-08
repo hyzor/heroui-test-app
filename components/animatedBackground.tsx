@@ -17,6 +17,8 @@ export default function AnimatedBackground() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const maxConnectionDistance = 300;
+
     const nodes: { x: number; y: number; vx: number; vy: number }[] = [];
     const connections: {
       path: number[];
@@ -54,7 +56,7 @@ export default function AnimatedBackground() {
             const dy = nodes[k].y - nodes[currentNode].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < minDistance && distance < 200) {
+            if (distance < minDistance && distance < maxConnectionDistance) {
               minDistance = distance;
               nearestNode = k;
             }
@@ -101,24 +103,32 @@ export default function AnimatedBackground() {
           const fromNode = nodes[conn.path[currentSegment]];
           const toNode = nodes[conn.path[currentSegment + 1]];
 
-          const x = fromNode.x + (toNode.x - fromNode.x) * segmentProgress;
-          const y = fromNode.y + (toNode.y - fromNode.y) * segmentProgress;
+          // Check distance between nodes before drawing
+          const dx = toNode.x - fromNode.x;
+          const dy = toNode.y - fromNode.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const maxDistance = maxConnectionDistance;
 
-          // Draw traveling particle
-          ctx.beginPath();
-          ctx.arc(x, y, 3, 0, Math.PI * 2);
-          ctx.fillStyle = conn.color + (1 - conn.progress) + ")";
-          ctx.fill();
-          ctx.shadowColor = conn.color + "1)";
-          ctx.shadowBlur = 10;
+          if (distance < maxDistance) {
+            const x = fromNode.x + (toNode.x - fromNode.x) * segmentProgress;
+            const y = fromNode.y + (toNode.y - fromNode.y) * segmentProgress;
 
-          // Draw trail behind particle
-          ctx.beginPath();
-          ctx.moveTo(fromNode.x, fromNode.y);
-          ctx.lineTo(x, y);
-          ctx.strokeStyle = conn.color + 0.3 * (1 - conn.progress) + ")";
-          ctx.lineWidth = 2;
-          ctx.stroke();
+            // Draw traveling particle
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = conn.color + (1 - conn.progress) + ")";
+            ctx.fill();
+            ctx.shadowColor = conn.color + "1)";
+            ctx.shadowBlur = 10;
+
+            // Draw trail behind particle
+            ctx.beginPath();
+            ctx.moveTo(fromNode.x, fromNode.y);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = conn.color + 0.3 * (1 - conn.progress) + ")";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
 
           // Draw faint connection lines between all nodes in path
           for (let i = 0; i < conn.path.length - 1; i++) {
@@ -128,7 +138,7 @@ export default function AnimatedBackground() {
             const dy = nodeB.y - nodeA.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < 200) {
+            if (distance < maxDistance) {
               ctx.beginPath();
               ctx.moveTo(nodeA.x, nodeA.y);
               ctx.lineTo(nodeB.x, nodeB.y);
