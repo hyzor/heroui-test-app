@@ -8,7 +8,7 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@heroui/navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
@@ -18,6 +18,7 @@ import { GithubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   const handleSmoothScroll = (e: any, href: string) => {
     e.preventDefault();
@@ -28,6 +29,39 @@ export const Navbar = () => {
       targetElement.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px",
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
+
+    siteConfig.navItems.forEach((item) => {
+      const targetId = item.href.replace("#", "");
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        observer.observe(targetElement);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md">
@@ -46,20 +80,25 @@ export const Navbar = () => {
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <ul className="hidden lg:flex gap-4 justify-start ml-2">
-            {siteConfig.navItems.map((item) => (
-              <NavbarItem key={item.href}>
-                <a
-                  className={clsx(
-                    linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium",
-                  )}
-                  href={item.href}
-                  onClick={(e) => handleSmoothScroll(e, item.href)}
-                >
-                  {item.label}
-                </a>
-              </NavbarItem>
-            ))}
+            {siteConfig.navItems.map((item) => {
+              const targetId = item.href.replace("#", "");
+              const isActive = activeSection === targetId;
+
+              return (
+                <NavbarItem key={item.href}>
+                  <a
+                    className={clsx(
+                      linkStyles({ color: "foreground" }),
+                      isActive ? "text-primary font-medium" : "",
+                    )}
+                    href={item.href}
+                    onClick={(e) => handleSmoothScroll(e, item.href)}
+                  >
+                    {item.label}
+                  </a>
+                </NavbarItem>
+              );
+            })}
           </ul>
         </NavbarContent>
 
@@ -96,21 +135,26 @@ export const Navbar = () => {
 
         <NavbarMenu>
           <div className="mx-4 mt-2 flex flex-col gap-2">
-            {siteConfig.navMenuItems.map((item, index) => (
-              <NavbarMenuItem key={`${item}-${index}`}>
-                <Link
-                  color="foreground"
-                  href={item.href}
-                  size="lg"
-                  onClick={(e) => {
-                    handleSmoothScroll(e as any, item.href);
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  {item.label}
-                </Link>
-              </NavbarMenuItem>
-            ))}
+            {siteConfig.navMenuItems.map((item, index) => {
+              const targetId = item.href.replace("#", "");
+              const isActive = activeSection === targetId;
+
+              return (
+                <NavbarMenuItem key={`${item}-${index}`}>
+                  <Link
+                    color={isActive ? "primary" : "foreground"}
+                    href={item.href}
+                    size="lg"
+                    onClick={(e) => {
+                      handleSmoothScroll(e as any, item.href);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                </NavbarMenuItem>
+              );
+            })}
           </div>
         </NavbarMenu>
       </HeroUINavbar>
