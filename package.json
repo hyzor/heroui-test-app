@@ -1,6 +1,6 @@
 {
-  "name": "next-app-template",
-  "version": "0.0.1",
+  "name": "personal-site-2025",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "prebuild": "bun run scripts/pdfjsWorker.tsx",
