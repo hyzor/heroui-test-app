@@ -18,6 +18,8 @@ export default function AnimatedBackground() {
     canvas.height = window.innerHeight;
 
     const maxConnectionDistance = 300;
+    const numNodes = 50;
+    const maxConnections = 20;
 
     const nodes: { x: number; y: number; vx: number; vy: number }[] = [];
     const connections: {
@@ -28,7 +30,7 @@ export default function AnimatedBackground() {
     }[] = [];
 
     // Create nodes
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < numNodes; i++) {
       nodes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -39,7 +41,7 @@ export default function AnimatedBackground() {
 
     // Create multi-node connections
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < maxConnections; i++) {
       const pathLength = Math.floor(Math.random() * 3) + 2; // 2-4 nodes per path
       const path: number[] = [];
       let currentNode = Math.floor(Math.random() * nodes.length);
@@ -77,6 +79,45 @@ export default function AnimatedBackground() {
       }
     }
 
+    // Function to create new connections dynamically
+    const createNewConnection = () => {
+      const pathLength = Math.floor(Math.random() * 3) + 2; // 2-4 nodes per path
+      const path: number[] = [];
+      let currentNode = Math.floor(Math.random() * nodes.length);
+
+      for (let j = 0; j < pathLength; j++) {
+        path.push(currentNode);
+        // Find nearest node that's not already in path
+        let nearestNode = -1;
+        let minDistance = Infinity;
+
+        for (let k = 0; k < nodes.length; k++) {
+          if (!path.includes(k)) {
+            const dx = nodes[k].x - nodes[currentNode].x;
+            const dy = nodes[k].y - nodes[currentNode].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < minDistance && distance < maxConnectionDistance) {
+              minDistance = distance;
+              nearestNode = k;
+            }
+          }
+        }
+
+        if (nearestNode === -1) break;
+        currentNode = nearestNode;
+      }
+
+      if (path.length > 1) {
+        connections.push({
+          path,
+          progress: 0,
+          speed: 0.001 + Math.random() * 0.002,
+          color: "rgba(100, 200, 255, ",
+        });
+      }
+    };
+
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -88,6 +129,34 @@ export default function AnimatedBackground() {
         if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
         if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
       });
+
+      // Remove connections that have nodes too far apart
+      for (let i = connections.length - 1; i >= 0; i--) {
+        const conn = connections[i];
+        let shouldRemove = false;
+
+        for (let j = 0; j < conn.path.length - 1; j++) {
+          const nodeA = nodes[conn.path[j]];
+          const nodeB = nodes[conn.path[j + 1]];
+          const dx = nodeB.x - nodeA.x;
+          const dy = nodeB.y - nodeA.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance > maxConnectionDistance) {
+            shouldRemove = true;
+            break;
+          }
+        }
+
+        if (shouldRemove) {
+          connections.splice(i, 1);
+        }
+      }
+
+      // Dynamically create new connections to maintain count
+      if (connections.length < maxConnections && Math.random() < 0.02) {
+        createNewConnection();
+      }
 
       // Draw multi-node connections
       connections.forEach((conn) => {
