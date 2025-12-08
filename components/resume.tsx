@@ -21,7 +21,7 @@ function Resume() {
 
   return (
     <Document file="/resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
-      <Page pageNumber={pageNumber} scale={1.25} />
+      <Page pageNumber={pageNumber} scale={1.5} />
     </Document>
   );
 }
