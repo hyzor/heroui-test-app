@@ -10,7 +10,9 @@ import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.mjs";
 
 function Resume() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [numPages, setNumPages] = useState<number | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageNumber, setPageNumber] = useState(1);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
