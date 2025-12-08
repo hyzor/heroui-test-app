@@ -1,5 +1,6 @@
 "use client";
 import { title } from "@/components/primitives";
+import { ScrollIndicator } from "@/components/scrollIndicator";
 
 import type { JSX } from "react";
 
@@ -9,6 +10,7 @@ interface SectionProps {
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   children?: React.ReactNode;
   className?: string;
+  showScrollIndicator?: boolean;
 }
 
 export function Section({
@@ -17,18 +19,20 @@ export function Section({
   headingLevel = 2,
   children,
   className,
+  showScrollIndicator = false,
 }: SectionProps) {
   const HeadingTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
 
   return (
     <section
-      className={`flex flex-col items-center justify-center gap-4 py-20 md:py-20 min-h-screen ${className || ""}`}
+      className={`flex flex-col items-center justify-center gap-4 py-20 md:py-20 min-h-screen relative ${className || ""}`}
       id={id}
     >
       <div className="inline-block max-w-3xl text-center">
         <HeadingTag className={title()}>{sectionTitle}</HeadingTag>
         {children}
       </div>
+      {showScrollIndicator && <ScrollIndicator />}
     </section>
   );
 }

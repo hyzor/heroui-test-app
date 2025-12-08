@@ -16,6 +16,7 @@ export default function Home() {
         headingLevel={1}
         id="home"
         title="Jesper Falkenby"
+        showScrollIndicator
       >
         <div className={subtitle({ class: "mt-2" })}>Full-Stack Developer</div>
         <div className="mt-8 flex justify-center">

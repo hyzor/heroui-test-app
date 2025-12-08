@@ -93,4 +93,18 @@ body::before {
   z-index: 1;
 }
 
+@keyframes fade-in-out {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-out {
+  animation: fade-in-out 2s ease-in-out infinite;
+}
+
 @config "../tailwind.config.mjs";
