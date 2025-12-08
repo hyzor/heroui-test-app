@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { scrollIndicator } from "@/components/primitives";
 
 export function ScrollIndicator() {
   const [opacity, setOpacity] = useState(1);
@@ -24,7 +25,7 @@ export function ScrollIndicator() {
       style={{ opacity }}
     >
       <div className="flex flex-col items-center gap-2">
-        <span className="text-sm text-gray-500 dark:text-gray-400 animate-fade-in-out">
+        <span className={scrollIndicator({ class: "animate-fade-in-out" })}>
           Scroll
         </span>
         <svg

@@ -51,3 +51,7 @@ export const subtitle = tv({
     fullWidth: true,
   },
 });
+
+export const scrollIndicator = tv({
+  base: "text-sm tracking-wide font-medium text-default-500 dark:text-default-400",
+});
