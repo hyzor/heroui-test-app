@@ -1,7 +1,7 @@
-'use client'
-import dynamic from 'next/dynamic'
+"use client";
+import dynamic from "next/dynamic";
 
-const ResumeViewer = dynamic(() => import('./resume'), {
- ssr: false
-})
-export default ResumeViewer
+const ResumeViewer = dynamic(() => import("./resume"), {
+  ssr: false,
+});
+export default ResumeViewer;

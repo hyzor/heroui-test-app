@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { Page, Document, pdfjs } from 'react-pdf';
+import { Page, Document, pdfjs } from "react-pdf";
 
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
+pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.mjs";
 
 function Resume() {
   const [numPages, setNumPages] = useState<number | null>(null);
@@ -18,10 +18,10 @@ function Resume() {
   }
 
   return (
-    <Document file='/resume.pdf' onLoadSuccess={onDocumentLoadSuccess}>
+    <Document file="/resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
       <Page pageNumber={pageNumber} scale={1.25} />
     </Document>
-  )
+  );
 }
 
 export default Resume;

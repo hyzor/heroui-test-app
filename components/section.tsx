@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { title } from "@/components/primitives";
 
 import type { JSX } from "react";

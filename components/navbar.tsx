@@ -20,7 +20,7 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  const handleSmoothScroll = (e: any, href: string) => {
+  const handleSmoothScroll = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     const targetId = href.replace("#", "");
     const targetElement = document.getElementById(targetId);
@@ -146,7 +146,7 @@ export const Navbar = () => {
                     href={item.href}
                     size="lg"
                     onClick={(e) => {
-                      handleSmoothScroll(e as any, item.href);
+                      handleSmoothScroll(e, item.href);
                       setIsMenuOpen(false);
                     }}
                   >
