@@ -17,8 +17,8 @@ export default function AnimatedBackground() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const maxConnectionDistance = 300;
-    const numNodes = 50;
+    const maxConnectionDistance = 350;
+    const numNodes = 40;
     const maxConnections = 20;
 
     const nodes: { x: number; y: number; vx: number; vy: number }[] = [];
