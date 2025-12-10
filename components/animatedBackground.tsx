@@ -14,8 +14,24 @@ export default function AnimatedBackground() {
 
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const updateCanvasSize = () => {
+      const width = Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth,
+      );
+      const height = Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight,
+      );
+
+      canvas.width = width;
+      canvas.height = height;
+
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+    };
+
+    updateCanvasSize();
 
     const maxConnectionDistance = 350;
     const numNodes = 40;
@@ -241,8 +257,7 @@ export default function AnimatedBackground() {
       clearTimeout(resizeTimeout);
 
       // Update canvas size immediately
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      updateCanvasSize();
 
       // Wait for user to stop resizing before redistributing nodes
       resizeTimeout = setTimeout(() => {
@@ -254,22 +269,60 @@ export default function AnimatedBackground() {
       }, 100); // Wait 300ms after resize stops
     };
 
+    const handleScroll = () => {
+      updateCanvasSize();
+    };
+
+    const handleOrientationChange = () => {
+      setTimeout(updateCanvasSize, 100);
+    };
+
+    const handleVisualViewportResize = () => {
+      updateCanvasSize();
+    };
+
     window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("orientationchange", handleOrientationChange);
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener(
+        "resize",
+        handleVisualViewportResize,
+      );
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("orientationchange", handleOrientationChange);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener(
+          "resize",
+          handleVisualViewportResize,
+        );
+      }
       clearTimeout(resizeTimeout);
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      style={{
-        background:
-          "linear-gradient(135deg, #000000 0%, #0a0a1e 50%, #0a0a2e 100%)",
-      }}
-    />
+    <div className="fixed inset-0 z-0">
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, #000000 0%, #0a0a1e 50%, #0a0a2e 100%)",
+        }}
+      />
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          width: "100vw",
+          height: "100vh",
+        }}
+      />
+    </div>
   );
 }
