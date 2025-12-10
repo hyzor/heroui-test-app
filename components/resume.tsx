@@ -19,14 +19,20 @@ function Resume() {
   useEffect(() => {
     const updateScale = () => {
       const width = window.innerWidth;
+
       if (width < 640) {
-        setScale(0.8);
+        // Mobile: scale to fit screen width with some padding
+        const screenWidth = width - 40; // 20px padding on each side
+        setScale(screenWidth / 600);
       } else if (width < 768) {
+        // Small tablet
         setScale(1.0);
       } else if (width < 1024) {
+        // Large tablet
         setScale(1.2);
       } else {
-        setScale(1.5);
+        // Desktop: fixed scale
+        setScale(1.4);
       }
     };
 
@@ -39,10 +45,22 @@ function Resume() {
     setNumPages(numPages);
   }
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+
   return (
-    <Document file="/resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
-      <Page pageNumber={pageNumber} scale={scale} />
-    </Document>
+    <div className={isMobile ? "overflow-x-auto px-5" : ""}>
+      <div className={isMobile ? "min-w-fit" : "flex justify-center"}>
+        <Document file="/resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
+          <Page
+            pageNumber={pageNumber}
+            scale={scale}
+            renderTextLayer={true}
+            renderAnnotationLayer={true}
+            className="shadow-lg"
+          />
+        </Document>
+      </div>
+    </div>
   );
 }
 
