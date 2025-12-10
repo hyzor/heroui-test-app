@@ -64,32 +64,36 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md overflow-hidden">
       <HeroUINavbar
         isMenuOpen={isMenuOpen}
-        maxWidth="xl"
+        maxWidth="full"
         position="static"
         onMenuOpenChange={setIsMenuOpen}
         className="bg-transparent border-none"
         classNames={{
-          wrapper: "bg-transparent px-4",
+          wrapper: "bg-transparent px-2 sm:px-4 max-w-full overflow-hidden",
           menu: "bg-black/20",
           menuItem: "bg-transparent",
           toggle: "bg-transparent",
         }}
       >
-        <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-          <ul className="hidden lg:flex gap-4 justify-start ml-2">
+        <NavbarContent
+          className="basis-1/5 sm:basis-full overflow-hidden"
+          justify="start"
+        >
+          <ul className="hidden lg:flex gap-2 sm:gap-4 justify-start overflow-x-hidden flex-nowrap">
             {siteConfig.navItems.map((item) => {
               const targetId = item.href.replace("#", "");
               const isActive = activeSection === targetId;
 
               return (
-                <NavbarItem key={item.href}>
+                <NavbarItem key={item.href} className="flex-shrink-0">
                   <a
                     className={clsx(
                       linkStyles({ color: "foreground" }),
                       isActive ? "text-primary font-medium" : "",
+                      "text-sm sm:text-base whitespace-nowrap",
                     )}
                     href={item.href}
                     onClick={(e) => handleSmoothScroll(e, item.href)}
@@ -103,10 +107,10 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent
-          className="hidden sm:flex basis-1/5 sm:basis-full"
+          className="hidden sm:flex basis-1/5 sm:basis-full overflow-hidden"
           justify="end"
         >
-          <NavbarItem className="hidden sm:flex gap-4">
+          <NavbarItem className="hidden sm:flex gap-2 sm:gap-4 flex-shrink-0">
             <Link isExternal aria-label="Github" href={siteConfig.links.github}>
               <GithubIcon className="text-default-500" />
             </Link>
@@ -123,14 +127,16 @@ export const Navbar = () => {
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-          <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <Link aria-label="Email" href={siteConfig.links.email}>
-            <MailIcon className="text-default-500" />
-          </Link>
-          <NavbarMenuToggle />
+        <NavbarContent className="sm:hidden basis-1 pl-2 pr-2" justify="end">
+          <div className="flex gap-2 items-center flex-shrink-0">
+            <Link isExternal aria-label="Github" href={siteConfig.links.github}>
+              <GithubIcon className="text-default-500" />
+            </Link>
+            <Link aria-label="Email" href={siteConfig.links.email}>
+              <MailIcon className="text-default-500" />
+            </Link>
+            <NavbarMenuToggle className="touch-manipulation" />
+          </div>
         </NavbarContent>
 
         <NavbarMenu>
