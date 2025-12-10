@@ -72,7 +72,8 @@ export const Navbar = () => {
         onMenuOpenChange={setIsMenuOpen}
         className="bg-transparent border-none"
         classNames={{
-          wrapper: "bg-transparent px-2 sm:px-4 max-w-full overflow-hidden",
+          wrapper:
+            "bg-transparent px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden",
           menu: "bg-black/20",
           menuItem: "bg-transparent",
           toggle: "bg-transparent",
