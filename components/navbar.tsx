@@ -129,14 +129,21 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent className="sm:hidden basis-1 pl-2 pr-2" justify="end">
-          <div className="flex gap-2 items-center flex-shrink-0">
+          <div className="flex gap-3 items-center flex-shrink-0">
             <Link isExternal aria-label="Github" href={siteConfig.links.github}>
               <GithubIcon className="text-default-500" />
             </Link>
             <Link aria-label="Email" href={siteConfig.links.email}>
               <MailIcon className="text-default-500" />
             </Link>
-            <NavbarMenuToggle className="touch-manipulation" />
+            <Link
+              isExternal
+              aria-label="LinkedIn"
+              href={siteConfig.links.linkedin}
+            >
+              <LinkedInIcon className="text-default-500" />
+            </Link>
+            <NavbarMenuToggle className="ml-4 touch-manipulation" />
           </div>
         </NavbarContent>
 
