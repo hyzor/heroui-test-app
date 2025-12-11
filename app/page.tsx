@@ -7,6 +7,13 @@ import { GithubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import aboutData from "@/data/about.json";
 import ResumeViewer from "@/components/resumeViewer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Full-Stack Developer | Software Engineer",
+  description:
+    "Jesper Falkenby - Full-Stack Developer specializing in JavaScript, TypeScript, React, Node.js, Java, and cloud technologies. Explore my portfolio, publications, and professional experience.",
+};
 
 export default function Home() {
   return (

@@ -2,7 +2,24 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Jesper Falkenby",
-  description: "Personal website",
+  description:
+    "Full-Stack Developer specializing in JavaScript, TypeScript, React, Node.js, Java, and cloud technologies. Personal portfolio showcasing projects, publications, and professional experience.",
+  url: "https://falkenby.com",
+  author: "Jesper Falkenby",
+  keywords: [
+    "full-stack developer",
+    "software engineer",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "Java",
+    "Kotlin",
+    "AWS",
+    "Terraform",
+    "web development",
+    "mobile development",
+  ],
   navItems: [
     {
       label: "Home",
