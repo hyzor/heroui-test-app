@@ -1,53 +1,101 @@
-# Next.js & HeroUI Template
+# Jesper Falkenby - Personal Portfolio
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+A modern, responsive personal portfolio website built with Next.js and optimized for performance and SEO.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+## Tech Stack
 
-## Technologies Used
+- **Framework**: [Next.js 16](https://nextjs.org/docs/getting-started) (App Router)
+- **UI Components**: [HeroUI v2](https://heroui.com/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with [Tailwind Variants](https://tailwind-variants.org)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Theme**: [next-themes](https://github.com/pacocoursey/next-themes)
+- **Package Manager**: [Bun](https://bun.sh/)
+- **Deployment**: [Vercel](https://vercel.com/) with [Cloudflare](https://www.cloudflare.com/) DNS
 
-- [Next.js 16](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+## Features
 
-## How to Use
+- 🎨 Modern, animated UI with dark/light theme support
+- 📱 Fully responsive design
+- 🔍 SEO optimized with structured data and meta tags
+- 📄 Interactive resume viewer with PDF.js
+- 📚 Publications section
+- ⚡ Optimized performance with Next.js 16
+- 🌐 Semantic HTML5 and accessibility considerations
 
-### Use the template with create-next-app
+## Development
 
-To create a new project based on this template using `create-next-app`, run the following command:
+### Prerequisites
 
-```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
-```
+- [Bun](https://bun.sh/) installed on your machine
 
-### Install dependencies
+### Getting Started
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
-
-```bash
-npm install
-```
-
-### Run the development server
-
-```bash
-npm run dev
-```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+1. Clone the repository:
 
 ```bash
-public-hoist-pattern[]=*@heroui/*
+git clone <repository-url>
+cd personal-site-2025
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+2. Install dependencies:
+
+```bash
+bun install
+```
+
+3. Run the development server:
+
+```bash
+bun run dev
+```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Available Scripts
+
+- `bun run dev` - Start development server with Turbopack
+- `bun run build` - Build for production
+- `bun run start` - Start production server
+- `bun run lint` - Run ESLint with auto-fix
+- `bunx tsc --noEmit` - Type checking without compilation
+
+### Project Structure
+
+```
+├── app/                 # Next.js App Router pages and layouts
+├── components/          # Reusable React components
+├── config/             # Site configuration and constants
+├── data/               # Static content (JSON)
+├── lib/                # Utility functions
+├── public/             # Static assets
+├── scripts/            # Build scripts and utilities
+├── styles/             # Global CSS and Tailwind config
+└── types/              # TypeScript type definitions
+```
+
+## AI Development Disclaimer
+
+This website has been largely written by the model Big Pickle by OpenCode Zen. The AI assistance was used for:
+
+- Initial project setup and architecture
+- Component development and styling
+- SEO optimization implementation
+- Code organization and best practices
+- TypeScript type definitions
+
+Human oversight was maintained throughout the development process, with manual review, testing, and refinement of all generated code to ensure quality, functionality, and adherence to project requirements.
+
+## Deployment
+
+The site is deployed on Vercel with Cloudflare handling DNS. The deployment process includes:
+
+- Automatic builds on git push
+- Optimized production builds
+- Global CDN distribution
+- SSL certificate management
+- Custom domain configuration
 
 ## License
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+Licensed under the [MIT license](LICENSE).
