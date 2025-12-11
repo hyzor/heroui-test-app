@@ -76,7 +76,7 @@ bun run dev
 
 ## AI Development Disclaimer
 
-This website has been largely written by the model Big Pickle by OpenCode Zen. The AI assistance was used for:
+This website has been largely written by the model Big Pickle on OpenCode Zen. The AI assistance was used for:
 
 - Initial project setup and architecture
 - Component development and styling
