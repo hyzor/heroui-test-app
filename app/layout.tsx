@@ -43,7 +43,7 @@ export default function RootLayout({
       >
         <AnimatedBackground />
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col">
+          <div className="relative flex flex-col z-10">
             <Navbar />
             <main className="container mx-auto max-w-7xl px-6 flex-grow">
               {children}
