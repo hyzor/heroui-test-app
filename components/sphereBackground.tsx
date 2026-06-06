@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // Configurable sphere starting position
@@ -61,45 +61,47 @@ function Sphere() {
   );
 }
 
-export default function SphereBackground() {
-  const [dpr, setDpr] = useState(1);
+function DprManager() {
+  const gl = useThree((state) => state.gl);
 
   useEffect(() => {
     const updateDpr = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       const pixelCount = width * height;
-      const maxPixelCount = 2560 * 1440; // 1440p threshold
 
-      if (pixelCount > maxPixelCount) {
-        setDpr(1);
+      let dpr: number;
+      if (pixelCount > 2560 * 1440) {
+        dpr = 1;
       } else if (pixelCount > 1920 * 1080) {
-        setDpr(Math.min(window.devicePixelRatio, 1.5));
+        dpr = Math.min(window.devicePixelRatio, 1.5);
       } else {
-        setDpr(Math.min(window.devicePixelRatio, 2));
+        dpr = Math.min(window.devicePixelRatio, 2);
       }
+
+      gl.setPixelRatio(dpr);
     };
 
     updateDpr();
     window.addEventListener("resize", updateDpr);
+    return () => window.removeEventListener("resize", updateDpr);
+  }, [gl]);
 
-    return () => {
-      window.removeEventListener("resize", updateDpr);
-    };
-  }, []);
+  return null;
+}
 
+export default function SphereBackground() {
   return (
     <div className="absolute inset-0">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 60 }}
-        dpr={dpr}
         gl={{
-          antialias: dpr <= 1.5,
           alpha: true,
           powerPreference: "high-performance",
           depth: true,
         }}
       >
+        <DprManager />
         <Sphere />
       </Canvas>
     </div>
