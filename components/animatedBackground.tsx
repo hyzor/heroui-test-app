@@ -78,6 +78,8 @@ export default function AnimatedBackground() {
 
     // Track traveling particles on connections
     const travelingParticles: TravelingParticle[] = [];
+    let connections: Connection[] = [];
+    let frameCount = 0;
 
     const animate = () => {
       if (isPausedRef.current) return;
@@ -99,40 +101,41 @@ export default function AnimatedBackground() {
         node.y = Math.max(0, Math.min(canvas.height, node.y));
       });
 
-      // Build dynamic connections based on proximity
-      const connections: Connection[] = [];
+      // Recalculate connections every 15 frames (nodes move slowly)
+      if (++frameCount === 15) {
+        frameCount = 0;
+        connections = [];
 
-      for (let i = 0; i < nodes.length; i++) {
-        const nodeA = nodes[i];
-        const nearbyNodes: { index: number; distance: number }[] = [];
+        for (let i = 0; i < nodes.length; i++) {
+          const nodeA = nodes[i];
+          const nearbyNodes: { index: number; distance: number }[] = [];
 
-        // Find all nearby nodes
-        for (let j = i + 1; j < nodes.length; j++) {
-          const nodeB = nodes[j];
-          const dx = nodeB.x - nodeA.x;
-          const dy = nodeB.y - nodeA.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          for (let j = i + 1; j < nodes.length; j++) {
+            const nodeB = nodes[j];
+            const dx = nodeB.x - nodeA.x;
+            const dy = nodeB.y - nodeA.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < connectionDistance) {
-            nearbyNodes.push({ index: j, distance });
+            if (distance < connectionDistance) {
+              nearbyNodes.push({ index: j, distance });
+            }
           }
-        }
 
-        // Sort by distance and take closest ones
-        nearbyNodes.sort((a, b) => a.distance - b.distance);
-        const connectionsToMake = Math.min(
-          maxConnectionsPerNode,
-          nearbyNodes.length,
-        );
+          nearbyNodes.sort((a, b) => a.distance - b.distance);
+          const connectionsToMake = Math.min(
+            maxConnectionsPerNode,
+            nearbyNodes.length,
+          );
 
-        for (let k = 0; k < connectionsToMake; k++) {
-          const dist = nearbyNodes[k].distance;
-          const opacity = 1 - dist / connectionDistance;
-          connections.push({
-            from: i,
-            to: nearbyNodes[k].index,
-            opacity: opacity * 0.6,
-          });
+          for (let k = 0; k < connectionsToMake; k++) {
+            const dist = nearbyNodes[k].distance;
+            const opacity = 1 - dist / connectionDistance;
+            connections.push({
+              from: i,
+              to: nearbyNodes[k].index,
+              opacity: opacity * 0.6,
+            });
+          }
         }
       }
 
