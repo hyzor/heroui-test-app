@@ -178,9 +178,11 @@ export default function AnimatedBackground() {
         const particle = travelingParticles[i];
         particle.progress += particle.speed;
 
-        // Remove particle if it reached the end
+        // Remove particle if it reached the end (swap-pop for O(1))
         if (particle.progress >= 1) {
-          travelingParticles.splice(i, 1);
+          travelingParticles[i] =
+            travelingParticles[travelingParticles.length - 1];
+          travelingParticles.pop();
           continue;
         }
 
