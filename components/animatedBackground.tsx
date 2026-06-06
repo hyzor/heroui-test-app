@@ -230,10 +230,6 @@ export default function AnimatedBackground() {
       }, 100);
     };
 
-    const handleScroll = () => {
-      updateCanvasSize();
-    };
-
     const handleOrientationChange = () => {
       setTimeout(updateCanvasSize, 100);
     };
@@ -243,7 +239,6 @@ export default function AnimatedBackground() {
     };
 
     window.addEventListener("resize", handleResize);
-    window.addEventListener("scroll", handleScroll);
     window.addEventListener("orientationchange", handleOrientationChange);
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
@@ -256,7 +251,6 @@ export default function AnimatedBackground() {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("orientationchange", handleOrientationChange);
 
       document.removeEventListener("visibilitychange", handleVisibilityChange);
