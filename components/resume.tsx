@@ -12,6 +12,8 @@ export default function Resume() {
   const [scale, setScale] = useState(1.5);
 
   useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+
     const updateScale = () => {
       const width = window.innerWidth;
 
@@ -26,9 +28,17 @@ export default function Resume() {
       }
     };
 
+    const debouncedResize = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(updateScale, 150);
+    };
+
     updateScale();
-    window.addEventListener("resize", updateScale);
-    return () => window.removeEventListener("resize", updateScale);
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(timeout);
+    };
   }, []);
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
