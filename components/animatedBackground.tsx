@@ -226,7 +226,7 @@ export default function AnimatedBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0">
+    <div className="fixed inset-0" style={{ zIndex: 0 }}>
       <div
         className="absolute inset-0"
         style={{
@@ -234,6 +234,13 @@ export default function AnimatedBackground() {
             "linear-gradient(135deg, #000000 0%, #0a0a1e 50%, #0a0a2e 100%)",
         }}
       />
+      {/* 3D Sphere Background - rendered on top */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ zIndex: 1 }}
+      >
+        <SphereBackground />
+      </div>
       {/* Particle network - rendered behind sphere */}
       <canvas
         ref={canvasRef}
@@ -244,13 +251,6 @@ export default function AnimatedBackground() {
           zIndex: 0,
         }}
       />
-      {/* 3D Sphere Background - rendered on top of particles */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 10 }}
-      >
-        <SphereBackground />
-      </div>
     </div>
   );
 }
