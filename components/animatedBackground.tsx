@@ -78,7 +78,8 @@ export default function AnimatedBackground() {
 
     // Track traveling particles on connections
     const travelingParticles: TravelingParticle[] = [];
-    let connections: Connection[] = [];
+    const connections: Connection[] = [];
+    const nearbyNodes: { index: number; distance: number }[] = [];
     let frameCount = 0;
 
     const animate = () => {
@@ -104,11 +105,11 @@ export default function AnimatedBackground() {
       // Recalculate connections every 15 frames (nodes move slowly)
       if (++frameCount === 15) {
         frameCount = 0;
-        connections = [];
+        connections.length = 0;
 
         for (let i = 0; i < nodes.length; i++) {
           const nodeA = nodes[i];
-          const nearbyNodes: { index: number; distance: number }[] = [];
+          nearbyNodes.length = 0;
 
           for (let j = i + 1; j < nodes.length; j++) {
             const nodeB = nodes[j];
