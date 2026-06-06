@@ -40,7 +40,9 @@ export const Navbar = () => {
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
+          setActiveSection((prev) =>
+            entry.target.id === prev ? prev : entry.target.id,
+          );
         }
       });
     };

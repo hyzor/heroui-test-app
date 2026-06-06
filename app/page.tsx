@@ -1,5 +1,5 @@
 import { Button } from "@heroui/button";
-import { Avatar } from "@heroui/avatar";
+import Image from "next/image";
 import { subtitle } from "@/components/primitives";
 import { Section } from "@/components/section";
 import { Publications } from "@/components/publications";
@@ -27,10 +27,13 @@ export default function Home() {
       >
         <div className={subtitle({ class: "mt-2" })}>Full-Stack Developer</div>
         <div className="mt-8 flex justify-center">
-          <Avatar
+          <Image
             alt="Jesper Falkenby - Full-Stack Developer"
-            className="w-64 h-64"
+            className="rounded-full w-64 h-64 object-cover"
+            height={256}
+            priority
             src="/profile.webp"
+            width={256}
           />
         </div>
       </Section>

@@ -1,18 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export function ScrollIndicator() {
-  const [opacity, setOpacity] = useState(1);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const fadeDistance = window.innerHeight * 0.3;
-      const newOpacity = Math.max(0, 1 - scrollY / fadeDistance);
-      setOpacity(newOpacity);
+      el.style.opacity = String(Math.max(0, 1 - scrollY / fadeDistance));
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -20,8 +22,8 @@ export function ScrollIndicator() {
 
   return (
     <div
+      ref={ref}
       className="absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-opacity duration-300"
-      style={{ opacity }}
     >
       <div className="flex flex-col items-center gap-2">
         <span className="text-sm tracking-wide font-medium text-default-500 dark:text-default-400 animate-fade-in-out">
