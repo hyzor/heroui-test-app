@@ -7,13 +7,18 @@ import * as THREE from "three";
 // Configurable sphere starting position
 const SPHERE_INITIAL_Y = 0.25;
 
-interface SphereProps {
-  scrollOffset: number;
-}
-
-function Sphere({ scrollOffset }: SphereProps) {
+function Sphere() {
   const wireframeRef = useRef<THREE.Mesh>(null);
   const targetY = useRef(SPHERE_INITIAL_Y);
+  const scrollOffsetRef = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollOffsetRef.current = window.scrollY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useFrame((state, delta) => {
     if (wireframeRef.current) {
@@ -21,7 +26,7 @@ function Sphere({ scrollOffset }: SphereProps) {
       wireframeRef.current.rotation.x += delta * 0.05;
 
       // Smooth parallax movement
-      const parallaxY = SPHERE_INITIAL_Y - scrollOffset * 0.0003;
+      const parallaxY = SPHERE_INITIAL_Y - scrollOffsetRef.current * 0.0003;
       targetY.current = parallaxY;
       wireframeRef.current.position.y +=
         (targetY.current - wireframeRef.current.position.y) * 0.1;
@@ -58,7 +63,6 @@ function Sphere({ scrollOffset }: SphereProps) {
 
 export default function SphereBackground() {
   const [dpr, setDpr] = useState(1);
-  const [scrollOffset, setScrollOffset] = useState(0);
 
   useEffect(() => {
     const updateDpr = () => {
@@ -76,17 +80,11 @@ export default function SphereBackground() {
       }
     };
 
-    const handleScroll = () => {
-      setScrollOffset(window.scrollY);
-    };
-
     updateDpr();
     window.addEventListener("resize", updateDpr);
-    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("resize", updateDpr);
-      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -102,7 +100,7 @@ export default function SphereBackground() {
           depth: true,
         }}
       >
-        <Sphere scrollOffset={scrollOffset} />
+        <Sphere />
       </Canvas>
     </div>
   );
