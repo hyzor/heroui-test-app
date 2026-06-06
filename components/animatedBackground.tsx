@@ -21,13 +21,6 @@ interface Connection {
   opacity: number;
 }
 
-interface TravelingParticle {
-  fromNode: number;
-  toNode: number;
-  progress: number;
-  speed: number;
-}
-
 export default function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
@@ -59,9 +52,9 @@ export default function AnimatedBackground() {
     updateCanvasSize();
 
     // Configuration for web-like network - reduced for 4K performance
-    const connectionDistance = 120;
-    const numNodes = 30;
-    const maxConnectionsPerNode = 3;
+    const connectionDistance = 280;
+    const numNodes = 60;
+    const maxConnectionsPerNode = 5;
 
     const nodes: Node[] = [];
 
@@ -70,14 +63,13 @@ export default function AnimatedBackground() {
       nodes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
         radius: Math.random() * 2 + 1.5,
       });
     }
 
     // Track traveling particles on connections
-    const travelingParticles: TravelingParticle[] = [];
     const connections: Connection[] = [];
     const nearbyNodes: { index: number; distance: number }[] = [];
     let frameCount = 0;
@@ -160,43 +152,6 @@ export default function AnimatedBackground() {
         ctx.fillStyle = "rgba(0, 255, 255, 0.8)";
         ctx.fill();
       });
-
-      // Spawn new traveling particles occasionally - reduced spawn rate
-      if (Math.random() < 0.005 && connections.length > 0) {
-        const randomConn =
-          connections[Math.floor(Math.random() * connections.length)];
-        travelingParticles.push({
-          fromNode: randomConn.from,
-          toNode: randomConn.to,
-          progress: 0,
-          speed: 0.015 + Math.random() * 0.015, // Slow speed: 1.5% to 3% per frame
-        });
-      }
-
-      // Update and draw traveling particles
-      for (let i = travelingParticles.length - 1; i >= 0; i--) {
-        const particle = travelingParticles[i];
-        particle.progress += particle.speed;
-
-        // Remove particle if it reached the end (swap-pop for O(1))
-        if (particle.progress >= 1) {
-          travelingParticles[i] =
-            travelingParticles[travelingParticles.length - 1];
-          travelingParticles.pop();
-          continue;
-        }
-
-        // Draw particle at current position
-        const nodeA = nodes[particle.fromNode];
-        const nodeB = nodes[particle.toNode];
-        const x = nodeA.x + (nodeB.x - nodeA.x) * particle.progress;
-        const y = nodeA.y + (nodeB.y - nodeA.y) * particle.progress;
-
-        ctx.beginPath();
-        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-        ctx.fill();
-      }
 
       animationRef.current = requestAnimationFrame(animate);
     };
